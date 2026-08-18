@@ -60,8 +60,7 @@ npx @vibe-cafe/vibe-usage status       # Show config & detected tools
 | Cursor | `state.vscdb` (SQLite, reads `cursorAuth/accessToken`, fetches CSV from `cursor.com`); cloud data is stamped with a fixed `cursor-cloud` hostname so multi-machine setups don't double-count |
 | DimAgent | `$DIMCODE_HOME/dimcode.sqlite` (default `~/.dimcode/v2/dimcode.sqlite`); exact usage from `usage_ledger`, with forked ledger/history copies deduplicated |
 | Gemini CLI | `~/.gemini/tmp/<project_hash>/chats/session-*.jsonl` (current line-delimited format) and legacy `session-*.json`; recurses into nested subagent sessions |
-| OpenCode | `~/.local/share/opencode/opencode.db` (SQLite, `json_extract` query) |
-| OpenClaw | `~/.openclaw/agents/`, `~/.openclaw-<profile>/agents/` (profile deployments); cache-creation/cache-write tokens are included in input usage |
+| OpenClaw | `~/.openclaw/agents/<agentId>/agent/openclaw-agent.sqlite` (OpenClaw ≥ 2026.8 SQLite transcript events) and legacy `~/.openclaw/agents/*/sessions/*.jsonl`, plus profile deployments `~/.openclaw-<profile>/agents/`; cache-creation/cache-write tokens are included in input usage |
 | Oh My Pi | `~/.omp/agent/sessions/`, `~/.omp/profiles/*/agent/sessions/`, and `$XDG_DATA_HOME/omp/{sessions,profiles/*/sessions}`; recognizes OMP's `$PI_CODING_AGENT_DIR`, current v3 title slots and path/hashed session directories, deduplicates copied records, includes cache writes in input, and splits reasoning from OMP's inclusive output count |
 | pi | `~/.pi/agent/sessions/` or `$PI_CODING_AGENT_DIR/sessions/`; cache writes are included in input usage |
 | Qwen Code | `~/.qwen/tmp/` |

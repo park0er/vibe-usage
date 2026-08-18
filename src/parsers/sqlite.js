@@ -108,7 +108,7 @@ export function queryDbJsonSnapshotOnLock(dbPath, sql, { tempPrefix = 'vibe-usag
     const queryPath = join(snapshotDir, basename(dbPath));
     try {
       copyFileSync(dbPath, queryPath);
-      for (const suffix of ['-shm', '-wal']) {
+      for (const suffix of ['-shm', '-wal', '-journal']) {
         const companion = `${dbPath}${suffix}`;
         if (existsSync(companion)) copyFileSync(companion, `${queryPath}${suffix}`);
       }

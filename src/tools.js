@@ -84,16 +84,26 @@ function findExtensionDirs(extensionId) {
 
 const findRooCodeDataDirs = () => findExtensionDirs('rooveterinaryinc.roo-cline');
 
-/** Find all OpenClaw data roots: ~/.openclaw and ~/.openclaw-<profile> */
+/** Find all OpenClaw data roots: ~/.openclaw, ~/.openclaw-<profile>, and legacy paths */
 function findOpenclawDataDirs() {
   const home = homedir();
   const dirs = [];
+  const roots = [
+    join(home, '.clawdbot'),
+    join(home, '.moltbot'),
+    join(home, '.moldbot'),
+    join(home, '.qclaw'),
+  ];
+  for (const r of roots) {
+    const agentsDir = join(r, 'agents');
+    if (existsSync(agentsDir)) dirs.push(agentsDir);
+  }
   try {
     for (const entry of readdirSync(home, { withFileTypes: true })) {
       if (!entry.isDirectory()) continue;
-      if (entry.name === '.openclaw' || /^\.openclaw-.+/.test(entry.name)) {
+      if (entry.name === '.openclaw' || /^\.openclaw-.+/.test(entry.name) || entry.name === '.qclaw' || /^\.qclaw-.+/.test(entry.name)) {
         const agentsDir = join(home, entry.name, 'agents');
-        if (existsSync(agentsDir)) dirs.push(agentsDir);
+        if (existsSync(agentsDir) && !dirs.includes(agentsDir)) dirs.push(agentsDir);
       }
     }
   } catch {
